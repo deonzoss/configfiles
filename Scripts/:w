@@ -1,0 +1,33 @@
+#!/bin/bash
+
+USER=deon
+declare -a COLORARRAY
+
+readarray COLORARRAY < /home/$USER/.cache/wal/colors
+
+for color in "${COLORARRAY[@]}"; do
+  color=${color%$'\n'} 
+  echo "$color"
+done
+
+file=/home/deon/.config/i3/config
+color=${COLORARRAY[0]}
+sed -i "s/set \$bg-color.*$/set \$bg-color  $(echo "$color")/" $file
+sed -i "s/set \$inactive-text-color.*$/set \$inactive-text-color  $(echo "$color")/" $file
+color=${COLORARRAY[1]}
+sed -i "s/set \$inactive-bg-color.*$/set \$inactive-bg-color  $(echo "$color")/" $file
+color=${COLORARRAY[2]}
+sed -i "s/set \$focused-outline-color.*$/set \$focused-outline-color  $(echo "$color")/" $file
+color=${COLORARRAY[15]}
+sed -i "s/set \$text-color.*$/set \$text-color  $(echo "$color")/" $file
+color=${COLORARRAY[12]}
+sed -i "s/set \$urgent-bg-color.*$/set \$urgent-bg-color  $(echo "$color")/" $file
+
+file=/usr/share/bumblebee-status/themes/solarized-powerline.json
+color=${COLORARRAY[0]}
+color2=${COLORARRAY[1]}
+color3=${COLORARRAY[15]}
+
+sed -i "15s/\"fg\".*,/\"fg\": \" $(echo "$color")\"/" $file
+
+#i3-msg restart
