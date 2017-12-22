@@ -1,0 +1,10 @@
+#!/bin/bash
+#################################################################
+#set the directory from where wallpapers are to be choosed 
+DIR="/home/deon/Pictures/Wallpaper"
+#set the time interval for transition of wallpaper in minutes
+f=$(ls $DIR |sort -R|tail -1)
+echo $f
+wal -i "$DIR/$f"
+exec sudo colorChanger
+###################################################################
